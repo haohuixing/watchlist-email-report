@@ -37,11 +37,11 @@ TSLA
 
 ## Windows quick start
 
-1. Install 64-bit Python 3.x from [python.org](https://www.python.org/downloads/windows/) and check **Add python.exe to PATH**.
+1. Install 64-bit Python 3.10 or newer from [python.org](https://www.python.org/downloads/windows/) and check **Add python.exe to PATH**.
 2. Download the repository:
    - Clone it with `git clone https://github.com/haohuixing/watchlist-email-report.git`, or
    - use **Code > Download ZIP** and extract it.
-3. In the project folder, create the environment and private settings file:
+3. Open Command Prompt in the project folder — the folder that directly contains `requirements.txt` and `run.bat`. In File Explorer, click the address bar, type `cmd`, and press Enter. Then create the environment and settings file:
 
    ```bat
    python -m venv .venv
