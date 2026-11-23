@@ -35,6 +35,24 @@ TSLA
   the summary counts unique symbols.
 - Edit the file whenever the client's lists change. No re-login is needed.
 
+## Windows quick start
+
+1. Install 64-bit Python 3.x from [python.org](https://www.python.org/downloads/windows/) and check **Add python.exe to PATH**.
+2. Download the repository:
+   - Clone it with `git clone https://github.com/haohuixing/watchlist-email-report.git`, or
+   - use **Code > Download ZIP** and extract it.
+3. In the project folder, create the environment and private settings file:
+
+   ```bat
+   python -m venv .venv
+   .venv\Scripts\python.exe -m pip install -r requirements.txt
+   copy .env.example .env
+   notepad .env
+   ```
+
+4. Fill in `SMTP_USERNAME`, `SMTP_PASSWORD`, and `MAIL_TO` as described below. Use a Gmail app password, not your normal Gmail password.
+5. Double-click `run.bat` to start the weekday 11:00 AM / 4:00 PM ET scheduler, or use the immediate test command below.
+
 ## Setup
 
 1. Create the virtual environment and install the one runtime dependency:
@@ -81,6 +99,16 @@ TSLA
    supervisor prints the next run and each result. It does not need Task
    Scheduler or a GitHub account.
 
+### Send a test report immediately
+
+`test-close-report.bat` runs the 4:00 PM ("Market close") path now instead of waiting for the scheduler. It captures fresh quotes and sends real email. It does **not** mark the scheduled slot as sent.
+
+- Double-click `test-close-report.bat` to send one combined email containing all watchlist rows. It sets `REPORT_BATCH_SIZE=500` for that run only.
+- Run `test-close-report.bat batches` to use the batch size in `.env`; with `REPORT_BATCH_SIZE=50` and 415 rows, that sends 9 emails.
+- Make sure `MAIL_TO` points to your test address before running.
+- The report header shows the actual capture time; only the slot label is Market close.
+- Capturing 400+ symbols can take several minutes. Check `logs\mailer.log` if sending fails.
+
 ## Commands
 
 ```text
@@ -90,6 +118,7 @@ python -m watchlist_mailer send [--slot open|close] [--mark-sent]
 python -m watchlist_mailer serve                Run the 11:00 / 16:00 ET supervisor
 python -m watchlist_mailer run-slot --slot open --date 2026-11-24
 python -m watchlist_mailer check                Show the next scheduled run
+test-close-report.bat [batches]                 Send a test close report immediately
 ```
 
 `send` does not record the slot by default; use `--mark-sent` if you want the
