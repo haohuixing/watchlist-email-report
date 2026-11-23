@@ -38,6 +38,7 @@ FAINT = "#94a3b8"
 BORDER = "#e6eaf0"
 SURFACE = "#f8fafc"
 EMPTY_VALUES = {"", "-", "--", "\u2014", "\u2013", "N/A", "n/a"}
+EM_DASH = "\u2014"
 
 STYLE = """
 <style>
@@ -571,7 +572,7 @@ def _card_html(section: Section, row: dict[str, str]) -> str:
         f"{name_html}{sector_html}</td>"
         '<td valign="top" align="right" style="white-space:nowrap;">'
         f'<div class="stock-price" style="font-size:23px;font-weight:700;color:{INK};line-height:1.15;'
-        f'font-variant-numeric:tabular-nums;">{_esc(price or "\u2014")}</div>'
+        f'font-variant-numeric:tabular-nums;">{_esc(price or EM_DASH)}</div>'
         f"{_change_pill(row, headers)}</td>"
         "</tr></table>"
         f"{metrics}{session}{ranges}"
@@ -642,7 +643,7 @@ def _generic_table(section: Section) -> str:
     for row in section.rows:
         cells = "".join(
             '<td style="padding:8px 8px 8px 0;border-bottom:1px solid #eef2f7;'
-            f'font-size:11px;color:#334155;vertical-align:top;">{_esc(_row_value(row, header) or "\u2014")}</td>'
+            f'font-size:11px;color:#334155;vertical-align:top;">{_esc(_row_value(row, header) or EM_DASH)}</td>'
             for header in headers
         )
         rows.append(f"<tr>{cells}</tr>")
